@@ -16,10 +16,10 @@
 <main class="container">
   <div class="card">
     <div class="tabs">
-      <button class="tab active">Details</button>
-      <button class="tab" disabled>Files</button>
-      <button class="tab" disabled>Past Maintenance(s)</button>
-      <button class="tab" disabled>History</button>
+  <button class="tab active">Details</button>
+  <button class="tab" disabled>Files</button>
+  <a href="<%=request.getContextPath()%>/app/maintenance/past" class="tab">Past Maintenance(s)</a>
+  <button class="tab" disabled>History</button>
     </div>
 
     <h2>New Vehicle Maintenance Request</h2>
@@ -117,6 +117,8 @@
       </div>
 
       <div class="actions">
+        <a href="<%=request.getContextPath()%>/app/maintenance/new" class="btn primary">Create Maintenance</a>
+        <button type="submit" class="btn success">Submit</button>
         <button type="submit" class="btn primary" onclick="setFmt('pdf')">Export PDF</button>
         <button type="submit" class="btn" onclick="setFmt('xlsx')">Export Excel</button>
         <button type="submit" class="btn" onclick="setFmt('csv')">Export CSV</button>

@@ -71,15 +71,15 @@
                 <textField><reportElement x="130" y="180" width="375" height="16"/><textFieldExpression><![CDATA[$F{location}]]></textFieldExpression></textField>
                 <textField><reportElement x="130" y="200" width="375" height="16"/><textFieldExpression><![CDATA[$F{workshop}]]></textFieldExpression></textField>
 
-                                <textField textAdjust="StretchHeight">
-                                    <reportElement x="130" y="220" width="375" height="50"/>
-                                    <textFieldExpression><![CDATA[$F{complaint}]]></textFieldExpression>
-                                </textField>
+                                                <textField isStretchWithOverflow="true">
+                                                    <reportElement x="130" y="220" width="375" height="50"/>
+                                                    <textFieldExpression><![CDATA[$F{complaint}]]></textFieldExpression>
+                                                </textField>
 
-                                <textField textAdjust="StretchHeight">
-                                    <reportElement x="130" y="280" width="375" height="50"/>
-                                    <textFieldExpression><![CDATA[$F{comments}]]></textFieldExpression>
-                                </textField>
+                                                <textField isStretchWithOverflow="true">
+                                                    <reportElement x="130" y="280" width="375" height="50"/>
+                                                    <textFieldExpression><![CDATA[$F{comments}]]></textFieldExpression>
+                                                </textField>
             </frame>
         </band>
     </detail>
