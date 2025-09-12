@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN"
+  "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport name="maintenance"
+              pageWidth="842" pageHeight="595" orientation="Landscape"
+              columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+
+  <parameter name="title" class="java.lang.String"/>
+
+  <field name="office" class="java.lang.String"/>
+  <field name="vehicle" class="java.lang.String"/>
+  <field name="faultType" class="java.lang.String"/>
+  <field name="client" class="java.lang.String"/>
+  <field name="driver" class="java.lang.String"/>
+  <field name="status" class="java.lang.String"/>
+  <field name="date" class="java.lang.String"/>
+  <field name="time" class="java.lang.String"/>
+  <field name="mileage" class="java.lang.String"/>
+  <field name="location" class="java.lang.String"/>
+  <field name="comments" class="java.lang.String"/>
+
+  <title>
+    <band height="40">
+      <staticText>
+        <reportElement x="0" y="0" width="782" height="20"/>
+        <textElement textAlignment="Center" fontSize="16" isBold="true"/>
+        <text><![CDATA[$P{title}]]></text>
+      </staticText>
+    </band>
+  </title>
+
+  <columnHeader>
+    <band height="20">
+      <staticText><reportElement x="0" y="0" width="70" height="20"/><text><![CDATA[Office]]></text></staticText>
+      <staticText><reportElement x="70" y="0" width="80" height="20"/><text><![CDATA[Vehicle]]></text></staticText>
+      <staticText><reportElement x="150" y="0" width="80" height="20"/><text><![CDATA[Fault]]></text></staticText>
+      <staticText><reportElement x="230" y="0" width="80" height="20"/><text><![CDATA[Client]]></text></staticText>
+      <staticText><reportElement x="310" y="0" width="80" height="20"/><text><![CDATA[Driver]]></text></staticText>
+      <staticText><reportElement x="390" y="0" width="90" height="20"/><text><![CDATA[Status]]></text></staticText>
+      <staticText><reportElement x="480" y="0" width="80" height="20"/><text><![CDATA[Date]]></text></staticText>
+      <staticText><reportElement x="560" y="0" width="60" height="20"/><text><![CDATA[Time]]></text></staticText>
+      <staticText><reportElement x="620" y="0" width="70" height="20"/><text><![CDATA[Mileage]]></text></staticText>
+      <staticText><reportElement x="690" y="0" width="92" height="20"/><text><![CDATA[Location]]></text></staticText>
+    </band>
+  </columnHeader>
+
+  <detail>
+    <band height="18">
+      <textField><reportElement x="0" y="0" width="70" height="18"/><textFieldExpression><![CDATA[$F{office}]]></textFieldExpression></textField>
+      <textField><reportElement x="70" y="0" width="80" height="18"/><textFieldExpression><![CDATA[$F{vehicle}]]></textFieldExpression></textField>
+      <textField><reportElement x="150" y="0" width="80" height="18"/><textFieldExpression><![CDATA[$F{faultType}]]></textFieldExpression></textField>
+      <textField><reportElement x="230" y="0" width="80" height="18"/><textFieldExpression><![CDATA[$F{client}]]></textFieldExpression></textField>
+      <textField><reportElement x="310" y="0" width="80" height="18"/><textFieldExpression><![CDATA[$F{driver}]]></textFieldExpression></textField>
+      <textField><reportElement x="390" y="0" width="90" height="18"/><textFieldExpression><![CDATA[$F{status}]]></textFieldExpression></textField>
+      <textField><reportElement x="480" y="0" width="80" height="18"/><textFieldExpression><![CDATA[$F{date}]]></textFieldExpression></textField>
+      <textField><reportElement x="560" y="0" width="60" height="18"/><textFieldExpression><![CDATA[$F{time}]]></textFieldExpression></textField>
+      <textField><reportElement x="620" y="0" width="70" height="18"/><textFieldExpression><![CDATA[$F{mileage}]]></textFieldExpression></textField>
+      <textField><reportElement x="690" y="0" width="92" height="18"/><textFieldExpression><![CDATA[$F{location}]]></textFieldExpression></textField>
+    </band>
+  </detail>
+</jasperReport>
