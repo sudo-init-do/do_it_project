@@ -7,6 +7,7 @@
 
   <display-name>Fleet Maintenance</display-name>
 
+  <!-- Servlets -->
   <servlet>
     <servlet-name>MaintenanceServlet</servlet-name>
     <servlet-class>dev.oyeyemi.it.web.MaintenanceServlet</servlet-class>
