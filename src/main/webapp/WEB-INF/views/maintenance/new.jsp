@@ -16,17 +16,17 @@
 <main class="container">
   <div class="card">
     <div class="tabs">
-  <button class="tab active">Details</button>
-  <button class="tab" disabled>Files</button>
-  <a href="<%=request.getContextPath()%>/app/maintenance/past" class="tab">Past Maintenance(s)</a>
-  <button class="tab" disabled>History</button>
+      <a href="<%=request.getContextPath()%>/app/maintenance/new" class="tab active">Details</a>
+      <a href="<%=request.getContextPath()%>/app/maintenance/files" class="tab">Files</a>
+      <a href="<%=request.getContextPath()%>/app/maintenance/past" class="tab">Past Maintenance(s)</a>
+      <a href="<%=request.getContextPath()%>/app/maintenance/history" class="tab">History</a>
+      <a href="<%=request.getContextPath()%>/app/maintenance/list" class="tab">List of Requests</a>
     </div>
 
     <h2>New Vehicle Maintenance Request</h2>
 
-    <!-- the form posts to /app/report; a hidden fmt sets export type -->
-    <form id="maintForm" method="get" action="<%=request.getContextPath()%>/app/report">
-      <input type="hidden" name="fmt" id="fmt" value="pdf"/>
+     
+  <form id="maintForm" method="post" action="<%=request.getContextPath()%>/app/maintenance" enctype="multipart/form-data">
 
       <div class="grid-2">
         <div class="field">
@@ -119,9 +119,7 @@
       <div class="actions">
         <a href="<%=request.getContextPath()%>/app/maintenance/new" class="btn primary">Create Maintenance</a>
         <button type="submit" class="btn success">Submit</button>
-        <button type="submit" class="btn primary" onclick="setFmt('pdf')">Export PDF</button>
-        <button type="submit" class="btn" onclick="setFmt('xlsx')">Export Excel</button>
-        <button type="submit" class="btn" onclick="setFmt('csv')">Export CSV</button>
+        <!-- Export buttons can be handled separately if needed -->
         <a class="btn ghost" href="<%=request.getContextPath()%>/">Cancel</a>
       </div>
     </form>

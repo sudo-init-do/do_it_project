@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Past Maintenances</title>
+  <title>Maintenance History</title>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/app.css">
 </head>
 <body>
@@ -17,11 +17,11 @@
     <div class="tabs">
       <a href="<%=request.getContextPath()%>/app/maintenance/new" class="tab">Details</a>
       <a href="<%=request.getContextPath()%>/app/maintenance/files" class="tab">Files</a>
-      <a href="<%=request.getContextPath()%>/app/maintenance/past" class="tab active">Past Maintenance(s)</a>
-      <a href="<%=request.getContextPath()%>/app/maintenance/history" class="tab">History</a>
+      <a href="<%=request.getContextPath()%>/app/maintenance/past" class="tab">Past Maintenance(s)</a>
+      <a href="<%=request.getContextPath()%>/app/maintenance/history" class="tab active">History</a>
       <a href="<%=request.getContextPath()%>/app/maintenance/list" class="tab">List of Requests</a>
     </div>
-    <h2>Past Vehicle Maintenances</h2>
+    <h2>Maintenance History</h2>
     <style>
       .table {
         width: 100%;
@@ -73,16 +73,16 @@
           <th>Driver</th>
           <th>Status</th>
           <th>Date</th>
-          <th>Submitted</th>
           <th>Attachment</th>
+          <th>Submitted</th>
+          <th>Export</th>
         </tr>
       </thead>
       <tbody>
         <% 
           java.util.List requests = (java.util.List)request.getAttribute("requests");
           if (requests != null && !requests.isEmpty()) {
-            for (int i = 0; i < requests.size(); i++) {
-              Object r = requests.get(i);
+            for (Object r : requests) {
               String line = r.toString();
               String[] vals = line.split("; ");
               String office = "", client = "", vehicle = "", driver = "", status = "", date = "", dateSubmitted = "", attachment = "";
@@ -97,21 +97,18 @@
                 if (v.startsWith("attachment=")) attachment = v.replace("attachment=","");
               }
         %>
-        <tr style="border-bottom:1px solid var(--line);">
+        <tr>
           <td><%=office.trim()%></td>
           <td><%=client.trim()%></td>
           <td><%=vehicle.trim()%></td>
           <td><%=driver.trim()%></td>
           <td><%=status.trim()%></td>
           <td><%=date.trim()%></td>
-          <td><small><%=dateSubmitted.trim()%></small></td>
           <td>
-            <% if (!attachment.trim().isEmpty() && i == requests.size()-1) { %>
+            <% if (!attachment.trim().isEmpty()) { %>
               <a href="/tmp/maint-uploads/<%=attachment.trim()%>" download class="download-btn">
                 <span class="download-icon">&#128190;</span> Download
               </a>
-            <% } else if (!attachment.trim().isEmpty()) { %>
-              <span style="color:var(--muted);">Attached</span>
             <% } else { %>
               -
             <% } %>
@@ -157,11 +154,12 @@
               <button type="submit" class="download-btn">CSV</button>
             </form>
           </td>
+          <td><small><%=dateSubmitted.trim()%></small></td>
         </tr>
         <%   }
           } else { %>
         <tr>
-          <td colspan="8" style="text-align:center;color:var(--muted);">No past maintenances found.</td>
+          <td colspan="8" style="text-align:center;">No history found.</td>
         </tr>
         <% } %>
       </tbody>
