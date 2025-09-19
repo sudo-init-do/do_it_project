@@ -51,7 +51,7 @@
         <li style="color:var(--muted);">No files uploaded yet.</li>
       <% } else {
         for (java.nio.file.Path file : files) { %>
-        <li><a href="/tmp/maint-uploads/<%=file.getFileName().toString()%>" download><%=file.getFileName().toString()%></a></li>
+        <li><a href="<%=request.getContextPath()%>/app/maintenance/download?file=<%=file.getFileName().toString()%>" download><%=file.getFileName().toString()%></a></li>
       <% } } %>
     </ul>
   </div>

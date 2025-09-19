@@ -107,7 +107,7 @@
           <td><small><%=dateSubmitted.trim()%></small></td>
           <td>
             <% if (!attachment.trim().isEmpty() && i == requests.size()-1) { %>
-              <a href="/tmp/maint-uploads/<%=attachment.trim()%>" download class="download-btn">
+              <a href="<%=request.getContextPath()%>/app/maintenance/download?file=<%=attachment.trim()%>" download class="download-btn">
                 <span class="download-icon">&#128190;</span> Download
               </a>
             <% } else if (!attachment.trim().isEmpty()) { %>

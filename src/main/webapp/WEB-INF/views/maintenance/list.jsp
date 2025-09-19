@@ -94,6 +94,7 @@
           <th>Comments</th>
           <th>Attachment</th>
           <th>Submitted</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -108,8 +109,16 @@
                  map.put(key, val);
                }
              }
+            String recId = map.getOrDefault("id", "");
+            String editUrl;
+            if (recId != null && !recId.trim().isEmpty()) {
+              editUrl = request.getContextPath() + "/app/maintenance/edit?id=" + recId;
+            } else {
+              String enc = java.net.URLEncoder.encode(line, java.nio.charset.StandardCharsets.UTF_8.toString());
+              editUrl = request.getContextPath() + "/app/maintenance/edit?line=" + enc;
+            }
         %>
-          <tr>
+          <tr data-edit="<%=editUrl%>">
             <td><%=map.getOrDefault("office","")%></td>
             <td><%=map.getOrDefault("client","")%></td>
             <td><%=map.getOrDefault("vehicle","")%></td>
@@ -123,12 +132,31 @@
             <td><%=map.getOrDefault("workshop","")%></td>
             <td><%=map.getOrDefault("complaint","")%></td>
             <td><%=map.getOrDefault("comments","")%></td>
-            <td><%=map.getOrDefault("attachment","").isEmpty()?"-":map.get("attachment")%></td>
+            <td>
+              <%=map.getOrDefault("attachment","").isEmpty()?"-":("<a href=\"" + request.getContextPath() + "/app/maintenance/download?file=" + map.get("attachment") + "\">[file]</a>")%>
+            </td>
             <td><%=map.getOrDefault("dateSubmitted","")%></td>
+            <td>
+              <a href="<%=editUrl%>">Edit</a>
+            </td>
           </tr>
         <% } %>
       </tbody>
     </table>
+    <script>
+      // Make table rows clickable to open edit form
+      (function(){
+        document.querySelectorAll('table.table tbody tr[data-edit]').forEach(function(row){
+          row.style.cursor = 'pointer';
+          row.addEventListener('click', function(e){
+            // ignore clicks on links inside the row
+            if (e.target && e.target.closest('a')) return;
+            var url = row.getAttribute('data-edit');
+            if (url) window.location = url;
+          });
+        });
+      })();
+    </script>
     <div style="margin-top: 24px;">
       <a href="<%=request.getContextPath()%>/app/maintenance/new" class="tab-btn">Create Maintenance</a>
     </div>

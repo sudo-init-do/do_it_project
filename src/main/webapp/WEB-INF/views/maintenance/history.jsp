@@ -9,106 +9,31 @@
 <header class="topbar slim">
   <div class="brand">
     <a class="brand-name" href="<%=request.getContextPath()%>/">instanta</a>
-    <span class="app-name">Fleet Management</span>
-  </div>
-</header>
-<main class="container">
-  <div class="card">
-    <div class="tabs">
-      <a href="<%=request.getContextPath()%>/app/maintenance/new" class="tab">Details</a>
-      <a href="<%=request.getContextPath()%>/app/maintenance/files" class="tab">Files</a>
-      <a href="<%=request.getContextPath()%>/app/maintenance/past" class="tab">Past Maintenance(s)</a>
-      <a href="<%=request.getContextPath()%>/app/maintenance/history" class="tab active">History</a>
-      <a href="<%=request.getContextPath()%>/app/maintenance/list" class="tab">List of Requests</a>
+    <div style="white-space:pre-wrap; font-family:monospace; background:#fff; padding:16px; border-radius:8px; border:1px solid var(--line);">
+      <%
+        java.util.List hist = (java.util.List)request.getAttribute("history");
+        if (hist == null || hist.isEmpty()) {
+      %>
+        <div>No history entries found.</div>
+      <% } else {
+           // render as blocks separated by the '----' separator used by the servlet
+           StringBuilder block = new StringBuilder();
+           for (Object o : hist) {
+             String s = o == null ? "" : o.toString();
+             if ("----".equals(s.trim())) {
+               out.print(org.apache.commons.text.StringEscapeUtils.escapeHtml4(block.toString()));
+               out.print("\n\n----\n\n");
+               block.setLength(0);
+             } else {
+               block.append(s).append("\n");
+             }
+           }
+           if (block.length() > 0) {
+             out.print(org.apache.commons.text.StringEscapeUtils.escapeHtml4(block.toString()));
+           }
+         }
+      %>
     </div>
-    <h2>Maintenance History</h2>
-    <style>
-      .table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 15px;
-      }
-      .table th, .table td {
-        padding: 10px 12px;
-        text-align: left;
-      }
-      .table th {
-        background: var(--accent-quiet);
-        color: var(--accent);
-        font-weight: 600;
-      }
-      .table tr {
-        border-bottom: 1px solid var(--line);
-        transition: background 0.2s;
-      }
-      .table tr:hover {
-        background: #f8fafc;
-      }
-      .download-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        padding: 6px 10px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--accent-quiet);
-        color: var(--accent);
-        text-decoration: none;
-        font-size: 14px;
-      }
-      .download-btn:hover {
-        background: var(--accent);
-        color: #fff;
-      }
-      .download-icon {
-        font-size: 16px;
-      }
-    </style>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Office</th>
-          <th>Client</th>
-          <th>Vehicle</th>
-          <th>Driver</th>
-          <th>Status</th>
-          <th>Date</th>
-          <th>Attachment</th>
-          <th>Submitted</th>
-          <th>Export</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% 
-          java.util.List requests = (java.util.List)request.getAttribute("requests");
-          if (requests != null && !requests.isEmpty()) {
-            for (Object r : requests) {
-              String line = r.toString();
-              String[] vals = line.split("; ");
-              String office = "", client = "", vehicle = "", driver = "", status = "", date = "", dateSubmitted = "", attachment = "";
-              for (String v : vals) {
-                if (v.startsWith("office=")) office = v.replace("office=","").replace("["," ").replace("]","");
-                if (v.startsWith("client=")) client = v.replace("client=","").replace("["," ").replace("]","");
-                if (v.startsWith("vehicle=")) vehicle = v.replace("vehicle=","").replace("["," ").replace("]","");
-                if (v.startsWith("driver=")) driver = v.replace("driver=","").replace("["," ").replace("]","");
-                if (v.startsWith("status=")) status = v.replace("status=","").replace("["," ").replace("]","");
-                if (v.startsWith("date=")) date = v.replace("date=","").replace("["," ").replace("]","");
-                if (v.startsWith("dateSubmitted=")) dateSubmitted = v.replace("dateSubmitted=","");
-                if (v.startsWith("attachment=")) attachment = v.replace("attachment=","");
-              }
-        %>
-        <tr>
-          <td><%=office.trim()%></td>
-          <td><%=client.trim()%></td>
-          <td><%=vehicle.trim()%></td>
-          <td><%=driver.trim()%></td>
-          <td><%=status.trim()%></td>
-          <td><%=date.trim()%></td>
-          <td>
-            <% if (!attachment.trim().isEmpty()) { %>
-              <a href="/tmp/maint-uploads/<%=attachment.trim()%>" download class="download-btn">
-                <span class="download-icon">&#128190;</span> Download
-              </a>
             <% } else { %>
               -
             <% } %>
