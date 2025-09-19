@@ -9,6 +9,20 @@
 <header class="topbar slim">
   <div class="brand">
     <a class="brand-name" href="<%=request.getContextPath()%>/">instanta</a>
+    <span class="app-name">Fleet Management</span>
+  </div>
+</header>
+<main class="container">
+  <div class="card">
+    <div class="tabs">
+      <a href="<%=request.getContextPath()%>/app/maintenance/new" class="tab">Details</a>
+      <a href="<%=request.getContextPath()%>/app/maintenance/files" class="tab">Files</a>
+      <a href="<%=request.getContextPath()%>/app/maintenance/past" class="tab">Past Maintenance(s)</a>
+      <a href="<%=request.getContextPath()%>/app/maintenance/history" class="tab active">History</a>
+      <a href="<%=request.getContextPath()%>/app/maintenance/list" class="tab">List of Requests</a>
+    </div>
+    <h2>Maintenance History</h2>
+
     <div style="white-space:pre-wrap; font-family:monospace; background:#fff; padding:16px; border-radius:8px; border:1px solid var(--line);">
       <%
         java.util.List hist = (java.util.List)request.getAttribute("history");
@@ -34,61 +48,6 @@
          }
       %>
     </div>
-            <% } else { %>
-              -
-            <% } %>
-          </td>
-          <td>
-            <form method="get" action="<%=request.getContextPath()%>/app/report" style="display:inline;">
-              <input type="hidden" name="office" value="<%=office.trim()%>" />
-              <input type="hidden" name="client" value="<%=client.trim()%>" />
-              <input type="hidden" name="vehicle" value="<%=vehicle.trim()%>" />
-              <input type="hidden" name="driver" value="<%=driver.trim()%>" />
-              <input type="hidden" name="status" value="<%=status.trim()%>" />
-              <input type="hidden" name="date" value="<%=date.trim()%>" />
-              <input type="hidden" name="dateSubmitted" value="<%=dateSubmitted.trim()%>" />
-              <input type="hidden" name="complaint" value="" />
-              <input type="hidden" name="comments" value="" />
-              <input type="hidden" name="fmt" value="pdf" />
-              <button type="submit" class="download-btn">PDF</button>
-            </form>
-            <form method="get" action="<%=request.getContextPath()%>/app/report" style="display:inline;">
-              <input type="hidden" name="office" value="<%=office.trim()%>" />
-              <input type="hidden" name="client" value="<%=client.trim()%>" />
-              <input type="hidden" name="vehicle" value="<%=vehicle.trim()%>" />
-              <input type="hidden" name="driver" value="<%=driver.trim()%>" />
-              <input type="hidden" name="status" value="<%=status.trim()%>" />
-              <input type="hidden" name="date" value="<%=date.trim()%>" />
-              <input type="hidden" name="dateSubmitted" value="<%=dateSubmitted.trim()%>" />
-              <input type="hidden" name="complaint" value="" />
-              <input type="hidden" name="comments" value="" />
-              <input type="hidden" name="fmt" value="xlsx" />
-              <button type="submit" class="download-btn">Excel</button>
-            </form>
-            <form method="get" action="<%=request.getContextPath()%>/app/report" style="display:inline;">
-              <input type="hidden" name="office" value="<%=office.trim()%>" />
-              <input type="hidden" name="client" value="<%=client.trim()%>" />
-              <input type="hidden" name="vehicle" value="<%=vehicle.trim()%>" />
-              <input type="hidden" name="driver" value="<%=driver.trim()%>" />
-              <input type="hidden" name="status" value="<%=status.trim()%>" />
-              <input type="hidden" name="date" value="<%=date.trim()%>" />
-              <input type="hidden" name="dateSubmitted" value="<%=dateSubmitted.trim()%>" />
-              <input type="hidden" name="complaint" value="" />
-              <input type="hidden" name="comments" value="" />
-              <input type="hidden" name="fmt" value="csv" />
-              <button type="submit" class="download-btn">CSV</button>
-            </form>
-          </td>
-          <td><small><%=dateSubmitted.trim()%></small></td>
-        </tr>
-        <%   }
-          } else { %>
-        <tr>
-          <td colspan="8" style="text-align:center;">No history found.</td>
-        </tr>
-        <% } %>
-      </tbody>
-    </table>
   </div>
 </main>
 </body>
