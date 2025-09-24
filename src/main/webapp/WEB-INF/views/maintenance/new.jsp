@@ -55,12 +55,20 @@
 
         <div class="field">
           <label>Vehicle <span class="req">*</span></label>
-          <select name="vehicle" required>
+          <select name="vehicle" id="vehicleSelect" required>
             <option value="">--Select--</option>
             <option <%= (reqObj!=null && "TRK-002".equals(reqObj.get("vehicle")))?"selected":"" %>>TRK-002</option>
             <option <%= (reqObj!=null && "BUS-014".equals(reqObj.get("vehicle")))?"selected":"" %>>BUS-014</option>
             <option <%= (reqObj!=null && "CAR-211".equals(reqObj.get("vehicle")))?"selected":"" %>>CAR-211</option>
           </select>
+          <div id="pastMaintenanceLink" style="margin-top: 4px;">
+            <% if (reqObj != null && reqObj.get("vehicle") != null && !reqObj.get("vehicle").toString().isEmpty()) { %>
+              <a href="<%=request.getContextPath()%>/app/maintenance/past?vehicle=<%=java.net.URLEncoder.encode(reqObj.get("vehicle").toString(), "UTF-8")%>" 
+                 target="_blank" style="font-size: 13px; color: var(--accent); text-decoration: none;">
+                📋 View past maintenance for <%=reqObj.get("vehicle")%>
+              </a>
+            <% } %>
+          </div>
         </div>
 
         <div class="field">
@@ -165,6 +173,17 @@
 
 <script>
   function setFmt(f){ document.getElementById('fmt').value = f; }
+  
+  // Update past maintenance link when vehicle selection changes
+  document.getElementById('vehicleSelect').addEventListener('change', function() {
+    const vehicle = this.value;
+    const linkDiv = document.getElementById('pastMaintenanceLink');
+    if (vehicle) {
+      linkDiv.innerHTML = '<a href="<%=request.getContextPath()%>/app/maintenance/past?vehicle=' + encodeURIComponent(vehicle) + '" target="_blank" style="font-size: 13px; color: var(--accent); text-decoration: none;">📋 View past maintenance for ' + vehicle + '</a>';
+    } else {
+      linkDiv.innerHTML = '';
+    }
+  });
 </script>
 </body>
 </html>

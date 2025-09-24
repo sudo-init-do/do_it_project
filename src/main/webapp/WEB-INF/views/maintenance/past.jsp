@@ -22,6 +22,24 @@
       <a href="<%=request.getContextPath()%>/app/maintenance/list" class="tab">List of Requests</a>
     </div>
     <h2>Past Vehicle Maintenances</h2>
+    
+    <!-- Vehicle Filter -->
+    <div style="margin-bottom: 16px; padding: 12px; background: #f8fafc; border-radius: 8px; border: 1px solid var(--line);">
+      <form method="get" action="<%=request.getContextPath()%>/app/maintenance/past" style="display: flex; gap: 8px; align-items: center;">
+        <label for="vehicle" style="font-weight: 500;">Filter by Vehicle:</label>
+        <input type="text" id="vehicle" name="vehicle" value="<%=request.getAttribute("filterVehicle") != null ? request.getAttribute("filterVehicle") : ""%>" 
+               placeholder="Enter vehicle number/name" style="padding: 6px 12px; border: 1px solid var(--line); border-radius: 4px; flex: 1; max-width: 300px;">
+        <button type="submit" class="download-btn">Filter</button>
+        <% if (request.getAttribute("filterVehicle") != null) { %>
+          <a href="<%=request.getContextPath()%>/app/maintenance/past" class="download-btn" style="text-decoration: none;">Clear</a>
+        <% } %>
+      </form>
+      <% if (request.getAttribute("filterVehicle") != null) { %>
+        <p style="margin: 8px 0 0 0; color: var(--accent); font-size: 14px;">
+          Showing maintenance history for vehicle: <strong><%=request.getAttribute("filterVehicle")%></strong>
+        </p>
+      <% } %>
+    </div>
     <style>
       .table {
         width: 100%;

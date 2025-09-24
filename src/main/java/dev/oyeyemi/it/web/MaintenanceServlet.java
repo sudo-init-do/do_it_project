@@ -55,6 +55,22 @@ public class MaintenanceServlet extends HttpServlet {
         // regenerate lines for JSP
         existing = serializeRecords(parsed);
       }
+      
+      // for past maintenance, filter by vehicle if specified
+      if ("/past".equals(p)) {
+        String filterVehicle = req.getParameter("vehicle");
+        if (filterVehicle != null && !filterVehicle.trim().isEmpty()) {
+          List<String> filtered = new ArrayList<>();
+          for (String line : existing) {
+            if (line.contains("vehicle=" + filterVehicle.trim())) {
+              filtered.add(line);
+            }
+          }
+          existing = filtered;
+          req.setAttribute("filterVehicle", filterVehicle.trim());
+        }
+      }
+      
       req.setAttribute("requests", existing);
       String view = "/WEB-INF/views/maintenance/" + ("/past".equals(p) ? "past.jsp" : "list.jsp");
       req.getRequestDispatcher(view).forward(req, resp);
@@ -174,14 +190,22 @@ public class MaintenanceServlet extends HttpServlet {
       boolean found = false;
       for (Map<String,String> r : records) {
         if (id.equals(r.get("id"))) {
-          // compute diffs before applying
+          // compute comprehensive diffs before applying - capture all field changes
           Map<String,String> oldCopy = new LinkedHashMap<>(r);
           Map<String,String> diffs = new LinkedHashMap<>();
-          for (String k : record.keySet()) {
+          
+          // check all fields that might have changed (both old and new)
+          Set<String> allKeys = new HashSet<>(oldCopy.keySet());
+          allKeys.addAll(record.keySet());
+          
+          for (String k : allKeys) {
             String oldV = oldCopy.getOrDefault(k, "");
             String newV = record.getOrDefault(k, "");
+            // track all changes, including empty -> value and value -> empty
             if (!Objects.equals(oldV, newV)) {
-              diffs.put(k, oldV + " -> " + newV);
+              String oldDisplay = oldV.isEmpty() ? "(empty)" : oldV;
+              String newDisplay = newV.isEmpty() ? "(empty)" : newV;
+              diffs.put(k, oldDisplay + " -> " + newDisplay);
             }
           }
           // merge attachments
